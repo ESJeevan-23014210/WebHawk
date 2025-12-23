@@ -1,0 +1,161 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f2f4f8;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode Toggle Icon */
+#theme-toggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.container {
+    max-width: 550px;
+    margin: 70px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tagline {
+    font-size: 14px;
+    color: #555;
+    margin-top: -5px;
+}
+
+h1 {
+    color: #1a2b49;
+    margin: 0;
+}
+
+.description {
+    font-size: 14px;
+    color: #555;
+    margin: 15px 0 25px;
+    text-align: center;
+}
+/* Fix result box text visibility in dark mode */
+.dark-mode .result-box {
+    color: #e0e0e0; /* light text for readability */
+}
+
+.dark-mode .result-box.safe {
+    background-color: #2c3e2c; /* dark greenish background */
+    border-left: 6px solid #27ae60; /* brighter green accent */
+}
+
+.dark-mode .result-box.danger {
+    background-color: #3a1e1e; /* dark reddish background */
+    border-left: 6px solid #e74c3c; /* red accent */
+}
+
+/* Make URL history readable in dark mode */
+.dark-mode .history {
+    color: #e0e0e0;
+}
+
+.dark-mode .history ul li {
+    color: #e0e0e0;
+}
+
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1558b0;
+}
+
+#loading {
+    display: none;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.result-box {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.safe {
+    background-color: #eafaf1;
+    border-left: 6px solid #2ecc71;
+}
+
+.danger {
+    background-color: #fdecea;
+    border-left: 6px solid #e74c3c;
+}
+
+.history {
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+.history ul {
+    padding-left: 20px;
+}
+
+footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+}
+
+/* DARK MODE STYLES */
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .container {
+    background-color: #1e1e1e;
+}
+
+.dark-mode input {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: #555;
+}
+
+.dark-mode .description,
+.dark-mode footer,
+.dark-mode .tagline {
+    color: #aaa;
+}
