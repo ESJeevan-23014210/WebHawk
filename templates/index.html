@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>WebHawk | Eyes on every link</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <!-- Dark Mode Toggle Icon -->
-<span id="theme-toggle" onclick="toggleDarkMode()">🌙</span>
+<span id="theme-toggle" onclick="toggleDarkMode()">⏾</span>
 
 <div class="container">
 
@@ -18,24 +18,24 @@
     </div>
 
     <p class="description">
-        This web application detects phishing and fake websites in real time by
-        analyzing URL patterns and identifying suspicious characteristics.
+        Detect phishing and fake websites in real time by analyzing URL patterns.
     </p>
 
-    <form method="POST" onsubmit="showLoading()">
+    <form method="POST">
         <input type="text" name="url" placeholder="Enter website URL" required>
         <button type="submit">Check Website</button>
-        <p id="loading">Checking URL, please wait...</p>
     </form>
 
     {% if result %}
     <div class="result-box {% if 'PHISHING' in result %}danger{% else %}safe{% endif %}">
         <h3>{{ result }}</h3>
-        <ul>
+        {% if reasons %}
+        <div class="reasons">
             {% for reason in reasons %}
-                <li>{{ reason }}</li>
+            <span class="reason-badge">{{ reason }}</span>
             {% endfor %}
-        </ul>
+        </div>
+        {% endif %}
     </div>
     {% endif %}
 
@@ -44,33 +44,35 @@
         <h4>Recent URL History</h4>
         <ul>
             {% for url, res in history %}
-                <li><b>{{ url }}</b> → {{ res }}</li>
+            <li><b>{{ url }}</b> → {{ res }}</li>
             {% endfor %}
         </ul>
+        <form method="POST" action="{{ url_for('clear_history') }}">
+            <button class="clear-history" type="submit">Clear History</button>
+        </form>
     </div>
     {% endif %}
 
     <footer>
         Mini Project | Phishing and Fake Detection System
     </footer>
-
 </div>
 
 <script>
-function showLoading() {
-    document.getElementById("loading").style.display = "block";
-}
-
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
-
     const toggle = document.getElementById("theme-toggle");
-    if (document.body.classList.contains("dark-mode")) {
-        toggle.textContent = "☀︎";
-    } else {
-        toggle.textContent = "⏾";
-    }
+    toggle.textContent = document.body.classList.contains("dark-mode") ? "☀︎" : "⏾";
+    localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
 }
+
+window.onload = function() {
+    const darkMode = localStorage.getItem("darkMode");
+    if (darkMode === "true") {
+        document.body.classList.add("dark-mode");
+        document.getElementById("theme-toggle").textContent = "☀︎";
+    }
+};
 </script>
 
 </body>
