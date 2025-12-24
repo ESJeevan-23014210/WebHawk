@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebHawk | About</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <h2 class="logo">WebHawk</h2>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+</div>
+
+<span id="menu-toggle" onclick="toggleMenu()">☰</span>
+<span id="theme-toggle" onclick="toggleDarkMode()">⏾</span>
+
+<div class="main-content">
+    <div class="container about-section">
+        <h1>About WebHawk</h1>
+        <p>WebHawk is a phishing and fake website detection system designed to protect users by analyzing URL patterns and identifying suspicious websites in real time.</p>
+        <p>Features:</p>
+        <ul class="feature-list">
+            <li>Real-time URL analysis</li>
+            <li>Detection of phishing, typosquatting, and suspicious keywords</li>
+            <li>History of recent URLs checked</li>
+            <li>Dark mode support</li>
+            <li>Simple and responsive UI</li>
+        </ul>
+
+        <footer>WebHawk | Phishing and Fake Detection System</footer>
+    </div>
+</div>
+
+<script>
+function toggleMenu() { document.getElementById("sidebar").classList.toggle("active"); }
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+}
+window.onload = function() {
+    if (localStorage.getItem("darkMode") === "true") document.body.classList.add("dark-mode");
+};
+</script>
+</body>
+</html>

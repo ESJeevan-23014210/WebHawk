@@ -2,78 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WebHawk | Eyes on every link</title>
+    <title>WebHawk | Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<!-- Dark Mode Toggle Icon -->
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <h2 class="logo">WebHawk</h2>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+</div>
+
+<!-- Menu & Dark Mode -->
+<span id="menu-toggle" onclick="toggleMenu()">☰</span>
 <span id="theme-toggle" onclick="toggleDarkMode()">⏾</span>
 
-<div class="container">
-
-    <div class="top-bar">
+<div class="main-content">
+    <div class="container">
         <h1>WebHawk</h1>
         <p class="tagline">Eyes on every link</p>
-    </div>
+        <p class="description">Detect phishing and fake websites in real time by analyzing URL patterns.</p>
 
-    <p class="description">
-        Detect phishing and fake websites in real time by analyzing URL patterns.
-    </p>
+        <!-- URL Input Form -->
+        <form method="POST">
+            <input type="text" name="url" placeholder="Enter website URL" required>
+            <button type="submit">Check Website</button>
+        </form>
 
-    <form method="POST">
-        <input type="text" name="url" placeholder="Enter website URL" required>
-        <button type="submit">Check Website</button>
-    </form>
-
-    {% if result %}
-    <div class="result-box {% if 'PHISHING' in result %}danger{% else %}safe{% endif %}">
-        <h3>{{ result }}</h3>
-        {% if reasons %}
-        <div class="reasons">
-            {% for reason in reasons %}
-            <span class="reason-badge">{{ reason }}</span>
-            {% endfor %}
+        <!-- Result Box -->
+        {% if result %}
+        <div class="result-box {% if 'PHISHING' in result or 'INVALID' in result %}danger{% else %}safe{% endif %}">
+            <h3>{{ result }}</h3>
+            {% if risk %}<p class="risk">Risk Level: <b>{{ risk }}</b></p>{% endif %}
+            {% if reasons %}
+                <div class="reason-container">
+                {% for reason in reasons %}
+                    <span class="reason-badge danger">{{ reason }}</span>
+                {% endfor %}
+                </div>
+            {% endif %}
         </div>
         {% endif %}
-    </div>
-    {% endif %}
 
-    {% if history %}
-    <div class="history">
-        <h4>Recent URL History</h4>
-        <ul>
-            {% for url, res in history %}
-            <li><b>{{ url }}</b> → {{ res }}</li>
-            {% endfor %}
-        </ul>
-        <form method="POST" action="{{ url_for('clear_history') }}">
-            <button class="clear-history" type="submit">Clear History</button>
-        </form>
-    </div>
-    {% endif %}
+        <!-- History -->
+        {% if history %}
+        <div class="history">
+            <h4>Recent URL History</h4>
+            <ul>
+                {% for item in history %}
+                <li>
+                    <b>{{ item.url }}</b> → {{ item.result }}
+                    {% if item.risk %} ({{ item.risk }}) {% endif %}
+                    {% if item.reasons %}
+                        <div class="reason-container">
+                        {% for r in item.reasons %}
+                            <span class="reason-badge danger">{{ r }}</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            <form method="POST" action="{{ url_for('clear_history') }}">
+                <button class="clear-history" type="submit">Clear History</button>
+            </form>
+        </div>
+        {% endif %}
 
-    <footer>
-        Mini Project | Phishing and Fake Detection System
-    </footer>
+        <footer>WebHawk | Phishing and Fake Detection System</footer>
+    </div>
 </div>
 
 <script>
+function toggleMenu() { document.getElementById("sidebar").classList.toggle("active"); }
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
-    const toggle = document.getElementById("theme-toggle");
-    toggle.textContent = document.body.classList.contains("dark-mode") ? "☀︎" : "⏾";
     localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
 }
-
 window.onload = function() {
-    const darkMode = localStorage.getItem("darkMode");
-    if (darkMode === "true") {
-        document.body.classList.add("dark-mode");
-        document.getElementById("theme-toggle").textContent = "☀︎";
-    }
+    if (localStorage.getItem("darkMode") === "true") document.body.classList.add("dark-mode");
 };
 </script>
-
 </body>
 </html>
