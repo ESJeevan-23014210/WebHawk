@@ -34,13 +34,8 @@
         {% if result %}
         <div class="result-box {% if 'PHISHING' in result or 'INVALID' in result %}danger{% else %}safe{% endif %}">
             <h3>{{ result }}</h3>
-            {% if risk %}<p class="risk">Risk Level: <b>{{ risk }}</b></p>{% endif %}
-            {% if reasons %}
-                <div class="reason-container">
-                {% for reason in reasons %}
-                    <span class="reason-badge danger">{{ reason }}</span>
-                {% endfor %}
-                </div>
+            {% if risk %}
+                <p class="risk">Risk Level: <b>{{ risk }}</b></p>
             {% endif %}
         </div>
         {% endif %}
@@ -54,13 +49,6 @@
                 <li>
                     <b>{{ item.url }}</b> → {{ item.result }}
                     {% if item.risk %} ({{ item.risk }}) {% endif %}
-                    {% if item.reasons %}
-                        <div class="reason-container">
-                        {% for r in item.reasons %}
-                            <span class="reason-badge danger">{{ r }}</span>
-                        {% endfor %}
-                        </div>
-                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>

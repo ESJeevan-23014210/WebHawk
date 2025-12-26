@@ -147,8 +147,7 @@ button.clear-history:hover { background-color: #c0392b; }
     margin: 3px 3px 0 0;
     font-size: 12px;
 }
-.reason-badge.danger { background-color: #fdecea; color: #641e16; border-left: 3px solid #e74c3c; }
-.reason-container { margin-top: 8px; margin-bottom: 8px; }
+
 
 /* ------------------ History ------------------ */
 .history { margin-top: 30px; font-size: 14px; }
@@ -191,5 +190,4 @@ footer { margin-top: 30px; text-align: center; font-size: 12px; color: #888; }
 .dark-mode .description, .dark-mode footer, .dark-mode .tagline { color: #aaa; }
 .dark-mode .result-box.safe { background-color: #1e2f22; border-left: 6px solid #27ae60; color: #a5f5b8; }
 .dark-mode .result-box.danger { background-color: #3a1e1e; border-left: 6px solid #e74c3c; color: #f5a5a5; }
-.dark-mode .reason-badge { background-color: #333; color: #fff; }
 .dark-mode .about-section { background-color: #1e1e1e; }
